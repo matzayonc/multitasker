@@ -1,5 +1,4 @@
-from os import read
-import discord, commands.connect, commands.disconnect; from helpers.config import prefix, bot
+import discord, commands.connect, commands.disconnect, commands.play; from helpers.config import prefix, bot
 
 @bot.event
 async def on_ready():
