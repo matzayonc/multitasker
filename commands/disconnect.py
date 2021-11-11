@@ -1,7 +1,7 @@
-import discord; from helpers.config import bot; from helpers.functions import get_connection_status;
+import discord
+from helpers.functions import get_connection_status
 
-@bot.command()
-async def disconnect(context):
+async def f_disconnect(context, bot):
     text_channel = discord.utils.get(context.guild.text_channels, name = "multitasker")
     if context.author.voice:
         bot_connection_status = get_connection_status(context.guild.voice_channels, bot.user.id, context.author.id)
@@ -14,9 +14,9 @@ async def disconnect(context):
         elif bot_connection_status[0] == 1:
             print(f"{context.author.name}, you cannot access me from there")
             await text_channel.send(f"{context.author.name}, you cannot access me from there")
-        else:
+        elif bot_connection_status[0] == 0:
             print(f"{context.author.name}, I am already disconnected")
             await text_channel.send(f"{context.author.name}, I am already disconnected")
-    else:
+    elif not context.author.voice:
         print(f"{context.author.name}, I am already disconnected")
         await text_channel.send(f"{context.author.name}, I am already disconnected")

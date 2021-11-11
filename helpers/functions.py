@@ -6,8 +6,8 @@ def get_connection_status(voice_channels, bot_id, user_id):
             return [1, voice_channel]
     return [0, voice_channel]
 
-# def prefix_change(string, old_prefix):  # not working yet! #
-#     begin_point = len(f"{old_prefix}changeprefix ")
+# def prefix_change(string, old_prefix):
+#     begin_point = len(f"{old_prefix}change_prefix ")
 #     end_point = len(string)
 #     if begin_point >= end_point:
 #         prefix = False
