@@ -2,7 +2,7 @@ import discord, configparser
 from commands.connect import f_connect
 from commands.disconnect import f_disconnect
 from commands.play import f_play
-# from commands.prefix import f_change_prefix
+from commands.prefix import f_change_prefix
 # from commands.loop import f_loop
 from discord.ext import commands
 
@@ -28,9 +28,10 @@ async def disconnect(context):
 async def play(context):
     await f_play(context, bot)
 
-# @bot.command()
-# async def change_prefix(context):
-#     await f_change_prefix(context, bot)
+@bot.command()
+async def change_prefix(context):
+    new_prefix = await f_change_prefix(context, bot)
+    bot.command_prefix = new_prefix
 
 # @bot.command()
 # async def loop(context):

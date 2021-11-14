@@ -6,11 +6,17 @@ def get_connection_status(voice_channels, bot_id, user_id):
             return [1, voice_channel]
     return [0, voice_channel]
 
-# def prefix_change(string, old_prefix):
-#     begin_point = len(f"{old_prefix}change_prefix ")
-#     end_point = len(string)
-#     if begin_point >= end_point:
-#         prefix = False
-#         return prefix
-#     prefix = string[begin_point : end_point]
-#     return prefix
+def prefix_change(string, old_prefix):
+    begin_point = len(f"{old_prefix}change_prefix ")
+    end_point = len(string)
+    if begin_point >= end_point:
+        prefix = False
+        return prefix
+    prefix = string[begin_point : end_point]
+    return prefix
+
+# def f_set_bot(prefix):
+#     config = configparser.ConfigParser()
+#     config.read('./helpers/config.env')
+#     prefix = config.get('VAR','VAR_PREFIX')
+#     bot = commands.Bot(command_prefix = prefix)
