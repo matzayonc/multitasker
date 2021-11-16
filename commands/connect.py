@@ -1,5 +1,5 @@
 import discord
-from helpers.functions import get_connection_status
+from helpers.connection import get_connection_status
 
 async def f_connect(context, bot):
     text_channel = discord.utils.get(context.guild.text_channels, name = "multitasker")

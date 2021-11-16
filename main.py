@@ -8,7 +8,7 @@ from discord.ext import commands
 
 config = configparser.ConfigParser()
 config.read('./helpers/config.env')
-prefix = config.get('VAR','VAR_PREFIX')
+prefix = config.get('var','var_prefix')
 bot = commands.Bot(command_prefix = prefix)
 
 @bot.event
@@ -31,11 +31,12 @@ async def play(context):
 @bot.command()
 async def change_prefix(context):
     new_prefix = await f_change_prefix(context, bot)
-    bot.command_prefix = new_prefix
+    if new_prefix:
+        bot.command_prefix = new_prefix
 
 # @bot.command()
 # async def loop(context):
 #     await f_loop(context, bot)
 
-token = config.get('VAR','VAR_TOKEN')
+token = config.get('var','var_token')
 bot.run(token)

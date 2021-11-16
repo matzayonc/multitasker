@@ -1,17 +1,22 @@
 import discord, configparser
-from helpers.functions import prefix_change
+from helpers.prefix import prefix_change
 
 async def f_change_prefix(context, bot):
+    text_channel = discord.utils.get(context.guild.text_channels, name = "multitasker")
     parser = configparser.ConfigParser()
     parser.read("./helpers/config.env")
-    prefix = parser.get("VAR","VAR_PREFIX")
+    prefix = parser.get("var","var_prefix")
     new_prefix = prefix_change(context.message.content, prefix)
-    if new_prefix == False:
-        await context.channel.send("You have to specify the prefix you want to be using.")
+    if new_prefix == 0:
+        await text_channel.send(f"You have to specify the prefix you want to be using.")
+        return None
+    elif new_prefix == 1:
+        await text_channel.send(f"You have to use different prefix.")
+        return None
     else:
-        parser.set("VAR", "VAR_PREFIX", new_prefix)
+        parser.set("var", "var_prefix", new_prefix)
         with open("./helpers/config.env", "w") as config:
             parser.write(config)
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{new_prefix}help"))
-        await context.channel.send(f"{context.author.name} has just changed prefix to '{new_prefix}'.")
+        await text_channel.send(f"{context.author.name} has just changed prefix to '{new_prefix}'.")
         return new_prefix
