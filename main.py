@@ -4,6 +4,7 @@ from commands.disconnect import f_disconnect
 from commands.play import f_play
 from commands.prefix import f_change_prefix
 # from commands.loop import f_loop
+from commands.clear import f_clear
 from discord.ext import commands
 
 config = configparser.ConfigParser()
@@ -37,6 +38,10 @@ async def change_prefix(context):
 # @bot.command()
 # async def loop(context):
 #     await f_loop(context, bot)
+
+@bot.command()
+async def clear(context):
+    await f_clear(context, bot)
 
 token = config.get('var','var_token')
 bot.run(token)
