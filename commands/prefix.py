@@ -2,7 +2,7 @@ import discord, configparser
 from helpers.prefix import prefix_change
 
 async def f_change_prefix(context, bot):
-    text_channel = discord.utils.get(context.guild.text_channels, name = "multitasker")
+    text_channel = discord.utils.get(context.guild.text_channels, name = "bot")
     parser = configparser.ConfigParser()
     parser.read("./helpers/config.env")
     prefix = parser.get("var","var_prefix")

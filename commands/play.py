@@ -2,7 +2,7 @@ import discord, os
 from helpers.connection import get_connection_status
 
 async def f_play(context, bot):
-    text_channel = discord.utils.get(context.guild.text_channels, name = "multitasker")
+    text_channel = discord.utils.get(context.guild.text_channels, name = "bot")
     voice_channel = context.channel.guild
     current_song = os.path.isfile("./data/song.mp3")
     bot_connection_status = get_connection_status(context.guild.voice_channels, bot.user.id, context.author.id)
