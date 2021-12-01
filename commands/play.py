@@ -9,6 +9,7 @@ async def f_play(context, bot):
     if bot_connection_status[0] == 2:
         if current_song:
             voice_channel.voice_client.play(discord.FFmpegPCMAudio(executable = "./helpers/ffmpeg.exe", source = "./data/song.mp3"))
+            voice_channel.voice_client.source = discord.PCMVolumeTransformer(voice_channel.voice_client.source, volume=0.025)
     elif bot_connection_status[0] == 1:
         print(f"{context.author.name}, you have to join my voice channel to use this command")
         await text_channel.send(f"{context.author.name}, you have to join my voice channel to use this command")

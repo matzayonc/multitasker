@@ -6,6 +6,7 @@ from commands.prefix import f_change_prefix
 # from commands.loop import f_loop
 from commands.clear import f_clear
 from commands.rng import f_rng
+from commands.help import f_help
 from discord.ext import commands
 
 intents = discord.Intents.default()
@@ -14,7 +15,7 @@ intents.members = True
 config = configparser.ConfigParser()
 config.read('./helpers/config.env')
 prefix = config.get('var','var_prefix')
-bot = commands.Bot(command_prefix = prefix, intents = intents)
+bot = commands.Bot(command_prefix = prefix, intents = intents, help_command = None)
 
 @bot.event
 async def on_ready():
@@ -55,6 +56,10 @@ async def clear(context):
 @bot.command()
 async def rng(context):
     await f_rng(context)
+
+@bot.command()
+async def help(context):
+    await f_help(context, bot)
 
 token = config.get('var','var_token')
 bot.run(token)
