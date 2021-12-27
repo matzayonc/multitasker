@@ -4,7 +4,7 @@ from helpers.prefix import prefix_change
 async def f_change_prefix(context, bot):
     text_channel = discord.utils.get(context.guild.text_channels, name = "bot")
     parser = configparser.ConfigParser()
-    parser.read("./helpers/config.env")
+    parser.read("./config.env")
     prefix = parser.get("var","var_prefix")
     new_prefix = prefix_change(context.message.content, prefix)
     if new_prefix == 0:
@@ -15,7 +15,7 @@ async def f_change_prefix(context, bot):
         return None
     else:
         parser.set("var", "var_prefix", new_prefix)
-        with open("./helpers/config.env", "w") as config:
+        with open("./config.env", "w") as config:
             parser.write(config)
         await bot.change_presence(activity=discord.Activity(type=discord.ActivityType.listening, name=f"{new_prefix}help"))
         await text_channel.send(f"{context.author.name} has just changed prefix to '{new_prefix}'.")

@@ -2,18 +2,22 @@ import discord, configparser
 from commands.connect import f_connect
 from commands.disconnect import f_disconnect
 from commands.play import f_play
+from commands.stop import f_stop
+from commands.pause import f_pause
+from commands.resume import f_resume
+from commands.queue import f_queue
 from commands.prefix import f_change_prefix
-# from commands.loop import f_loop
 from commands.clear import f_clear
 from commands.rng import f_rng
 from commands.help import f_help
+from helpers.parameter import get_parameters
 from discord.ext import commands
 
 intents = discord.Intents.default()
 intents.members = True
 
 config = configparser.ConfigParser()
-config.read('./helpers/config.env')
+config.read('./config.env')
 prefix = config.get('var','var_prefix')
 bot = commands.Bot(command_prefix = prefix, intents = intents, help_command = None)
 
@@ -28,38 +32,75 @@ async def on_member_join(member):
     await member.add_roles(role)
 
 @bot.command()
+async def help(context):
+    await f_help(context, bot)
+
+@bot.command()
 async def connect(context):
-    await f_connect(context, bot)
+    if get_parameters(context.message.content, 0) != None:
+        await f_connect(context, bot)
+    else:
+        await context.author.send("Command 'connect' takes no parameters!")
 
 @bot.command()
 async def disconnect(context):
-    await f_disconnect(context, bot)
+    if get_parameters(context.message.content, 0) != None:
+        await f_disconnect(context, bot)
+    else:
+        await context.author.send("Command 'disconnect' takes no parameters!")
+
+@bot.command()
+async def rng(context):
+    if get_parameters(context.message.content, 2) != None:
+        await f_rng(context)
+    else:
+        await context.author.send("Command 'rng' takes two parameters!")
+
+@bot.command()
+async def clear(context):
+    if get_parameters(context.message.content, 1) != None:
+        await f_clear(context)
+    else:
+        await context.author.send("Command 'clear' takes one parameter!")
 
 @bot.command()
 async def play(context):
-    await f_play(context, bot)
+    parameters = get_parameters(context.message.content, 1)
+    if parameters != None:
+        await f_play(context, bot, parameters[0])
+    else:
+        await context.author.send("Command 'play' takes one parameter!")
+
+@bot.command()
+async def stop(context):
+    if get_parameters(context.message.content, 0) != None:
+        await f_stop(context)
+    else:
+        await context.author.send("Command 'stop' takes no parameters!")
+
+@bot.command()
+async def pause(context):
+    if get_parameters(context.message.content, 0) != None:
+        await f_pause(context)
+    else:
+        await context.author.send("Command 'pause' takes no parameters!")
+   
+@bot.command()
+async def resume(context):
+    if get_parameters(context.message.content, 0) != None:
+        await f_resume(context)
+    else:
+        await context.author.send("Command 'resume' takes no parameters!")
+
+@bot.command()
+async def queue(context):
+    await f_queue(context)
 
 @bot.command()
 async def change_prefix(context):
     new_prefix = await f_change_prefix(context, bot)
     if new_prefix:
         bot.command_prefix = new_prefix
-
-# @bot.command()
-# async def loop(context):
-#     await f_loop(context, bot)
-
-@bot.command()
-async def clear(context):
-    await f_clear(context)
-
-@bot.command()
-async def rng(context):
-    await f_rng(context)
-
-@bot.command()
-async def help(context):
-    await f_help(context, bot)
 
 token = config.get('var','var_token')
 bot.run(token)
