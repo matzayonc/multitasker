@@ -10,6 +10,7 @@ from commands.prefix import f_change_prefix
 from commands.clear import f_clear
 from commands.rng import f_rng
 from commands.help import f_help
+from commands.time import f_time
 from helpers.parameter import get_parameters
 from discord.ext import commands
 
@@ -51,15 +52,17 @@ async def disconnect(context):
 
 @bot.command()
 async def rng(context):
-    if get_parameters(context.message.content, 2) != None:
-        await f_rng(context)
+    parameters = get_parameters(context.message.content, 2)
+    if parameters != None:
+        await f_rng(context, parameters[0], parameters[1])
     else:
         await context.author.send("Command 'rng' takes two parameters!")
 
 @bot.command()
 async def clear(context):
-    if get_parameters(context.message.content, 1) != None:
-        await f_clear(context)
+    parameters = get_parameters(context.message.content, 1)
+    if parameters != None:
+        await f_clear(context, parameters[0])
     else:
         await context.author.send("Command 'clear' takes one parameter!")
 
@@ -101,6 +104,14 @@ async def change_prefix(context):
     new_prefix = await f_change_prefix(context, bot)
     if new_prefix:
         bot.command_prefix = new_prefix
+
+@bot.command()
+async def time(context):
+    parameters = get_parameters(context.message.content, 1)
+    if parameters != None:
+        await f_time(context, parameters[0])
+    else:
+        await context.author.send("Command 'time' takes one parameters!")
 
 token = config.get('var','var_token')
 bot.run(token)

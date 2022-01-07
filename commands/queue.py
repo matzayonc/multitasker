@@ -7,4 +7,4 @@ async def f_queue(context):
     for m in range(0, len(temp), 1):
         if ".mp3" in temp[m]:
             queue.append(temp[m])
-    await text_channel.send(f"Current queue: {queue}")
+    await text_channel.send(f"Queue: {queue}")
