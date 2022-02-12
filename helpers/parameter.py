@@ -3,10 +3,12 @@ def get_parameters(content, parameters):
     output = []
     if len(message) == parameters + 1:
         for m in range(1, parameters + 1, 1):
-            output.append(message[m])    
+            output.append(message[m])
         return output
     else:
         return None
+
+
 def check_parameter(parameter, type):
     if type == "int":
         white_list = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]

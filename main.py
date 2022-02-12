@@ -35,7 +35,7 @@ async def ping(context):
 
 @bot.command()
 async def help(context):
-    await cmd.help(context, bot)
+    await cmd.get_help(context, bot)
 
 
 @bot.command()
