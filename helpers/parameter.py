@@ -1,12 +1,19 @@
-def get_parameters(content, parameters):
-    message = content.split(" ")
-    output = []
-    if len(message) == parameters + 1:
-        for m in range(1, parameters + 1, 1):
-            output.append(message[m])
-        return output
-    else:
-        return None
+from nis import match
+
+
+def get_parameters(content, amount):
+    output = content.split(" ")[1:]
+
+    if len(output) != amount:
+        if amount == 0:
+            raise Exception('Command takes no parameters!')
+        elif amount == 1:
+            raise Exception('Command takes a parameter!')
+        else:
+            raise Exception('Command takes ' +
+                            str(amount) + ' parameters!')
+
+    return None if amount == 0 else output
 
 
 def check_parameter(parameter, type):

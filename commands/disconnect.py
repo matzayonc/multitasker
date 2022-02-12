@@ -13,13 +13,12 @@ async def disconnect(context, bot):
                     await client.disconnect()
                     print(
                         f"{context.author.name} has just banished me from this voice-channel")
-                    await text_channel.send(f"{context.author.name} has just banished me from this voice-channel")
+                    # await text_channel.send(f"{context.author.name} has just banished me from this voice-channel")
         elif bot_connection_status[0] == 1:
-            print(f"{context.author.name}, you cannot access me from there")
-            await text_channel.send(f"{context.author.name}, you cannot access me from there")
+            raise Exception(
+                f"{context.author.name}, you cannot access me from there")
         elif bot_connection_status[0] == 0:
-            print(f"{context.author.name}, I am already disconnected")
-            await text_channel.send(f"{context.author.name}, I am already disconnected")
-    elif not context.author.voice:
-        print(f"{context.author.name}, I am already disconnected")
-        await text_channel.send(f"{context.author.name}, I am already disconnected")
+            raise Exception(
+                f"{context.author.name}, I am already disconnected")
+    else:
+        raise Exception(f"{context.author.name}, I am already disconnected")

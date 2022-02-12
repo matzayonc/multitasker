@@ -40,74 +40,87 @@ async def help(context):
 
 @bot.command()
 async def connect(context):
-    if get_parameters(context.message.content, 0) != None:
+    try:
+        get_parameters(context.message.content, 0)
         await cmd.connect(context, bot)
-    else:
-        await context.author.send("Command 'connect' takes no parameters!")
+    except Exception as e:
+        print(e.args[0])
+        await context.author.send(e.args[0])
 
 
 @bot.command()
 async def disconnect(context):
-    if get_parameters(context.message.content, 0) != None:
+    try:
+        get_parameters(context.message.content, 0)
         await cmd.disconnect(context, bot)
-    else:
-        await context.author.send("Command 'disconnect' takes no parameters!")
+    except Exception as e:
+        print(e.args[0])
+        await context.author.send(e.args[0])
 
 
 @bot.command()
 async def rng(context):
-    parameters = get_parameters(context.message.content, 2)
-    if parameters != None:
+    try:
+        parameters = get_parameters(context.message.content, 2)
         await cmd.rng(context, parameters[0], parameters[1])
-    else:
-        await context.author.send("Command 'rng' takes two parameters!")
+    except Exception as e:
+        print(e.args[0])
+        await context.author.send(e.args[0])
 
 
 @bot.command()
 async def clear(context):
-    parameters = get_parameters(context.message.content, 1)
-    if parameters != None:
+    try:
+        parameters = get_parameters(context.message.content, 1)
         await cmd.clear(context, parameters[0])
-    else:
-        await context.author.send("Command 'clear' takes one parameter!")
+    except Exception as e:
+        print(e.args[0])
+        await context.author.send(e.args[0])
 
 
 @bot.command()
 async def play(context):
-    parameters = get_parameters(context.message.content, 1)
-    if parameters != None:
+    try:
+        parameters = get_parameters(context.message.content, 1)
         await cmd.play(context, bot, parameters[0])
-    else:
-        await context.author.send("Command 'play' takes one parameter!")
+    except Exception as e:
+        print(e.args[0])
+        await context.author.send(e.args[0])
 
 
 @bot.command()
 async def stop(context):
-    if get_parameters(context.message.content, 0) != None:
+    try:
+        get_parameters(context.message.content, 0)
         await cmd.stop(context)
-    else:
-        await context.author.send("Command 'stop' takes no parameters!")
+    except Exception as e:
+        print(e.args[0])
+        await context.author.send(e.args[0])
 
 
 @bot.command()
 async def pause(context):
-    if get_parameters(context.message.content, 0) != None:
+    try:
+        get_parameters(context.message.content, 0)
         await cmd.pause(context)
-    else:
-        await context.author.send("Command 'pause' takes no parameters!")
+    except Exception as e:
+        print(e.args[0])
+        await context.author.send(e.args[0])
 
 
 @bot.command()
 async def resume(context):
-    if get_parameters(context.message.content, 0) != None:
+    try:
+        get_parameters(context.message.content, 0)
         await cmd.resume(context)
-    else:
-        await context.author.send("Command 'resume' takes no parameters!")
+    except Exception as e:
+        print(e.args[0])
+        await context.author.send(e.args[0])
 
 
 @bot.command()
 async def queue(context):
-    await cmd.f_queue(context)
+    await cmd.queue(context)
 
 
 # @bot.command()

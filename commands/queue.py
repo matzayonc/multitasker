@@ -2,7 +2,7 @@ import discord
 import os
 
 
-async def f_queue(context):
+async def queue(context):
     text_channel = discord.utils.get(context.guild.text_channels, name="bot")
     temp = os.listdir("./queue/")
     queue = []
