@@ -8,8 +8,6 @@ from utils import get_config, set_config, yt
 intents = discord.Intents.default()
 intents.members = True
 
-# yt()
-
 config = get_config()
 bot = commands.Bot(
     command_prefix=config['prefix'], intents=intents, help_command=None
@@ -31,6 +29,18 @@ async def on_member_join(member):
 @bot.command()
 async def ping(context):
     await context.author.send("Hejcia")
+
+
+@bot.command()
+async def yt(context):
+    try:
+        props = get_parameters(context.message.content, 2)
+        await cmd.yt(context, bot, props[0], props[1])
+        print('playing', props[1])
+        await cmd.play(context, bot, props[1])
+    except Exception as e:
+        print(e.args[0])
+        await context.author.send(e.args[0])
 
 
 @bot.command()
