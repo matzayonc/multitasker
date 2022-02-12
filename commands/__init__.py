@@ -11,3 +11,4 @@ from commands.rng import *
 from commands.help import *
 from commands.time import *
 from commands.yt import *
+from commands.random import *

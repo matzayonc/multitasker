@@ -99,6 +99,16 @@ async def play(context):
 
 
 @bot.command()
+async def random(context):
+    try:
+        get_parameters(context.message.content, 0)
+        await cmd.random(context, bot)
+    except Exception as e:
+        print(e.args[0])
+        await context.author.send(e.args[0])
+
+
+@bot.command()
 async def stop(context):
     try:
         get_parameters(context.message.content, 0)
