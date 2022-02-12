@@ -8,7 +8,7 @@ async def queue(context):
     queue = []
     for m in range(0, len(temp), 1):
         if ".mp3" in temp[m]:
-            queue.append(temp[m])
+            queue.append(temp[m].split('.')[0])
         if ".webm" in temp[m]:
-            queue.append(temp[m])
+            queue.append(temp[m].split('.')[0])
     await text_channel.send(f"Queue: {queue}")
