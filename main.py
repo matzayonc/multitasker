@@ -2,7 +2,7 @@ import discord
 import commands as cmd
 from helpers.parameter import get_parameters
 from discord.ext import commands
-from utils import get_config, set_config, yt
+from helpers.utils import get_config, set_config, yt
 
 
 intents = discord.Intents.default()
