@@ -3,7 +3,7 @@ import os
 from helpers.connection import get_connection_status
 
 
-async def f_play(context, bot, song):
+async def play(context, bot, song):
     bot_connection_status = get_connection_status(
         context.guild.voice_channels, bot.user.id, context.author.id)
     if bot_connection_status[0] == 2:

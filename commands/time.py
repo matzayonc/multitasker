@@ -1,12 +1,14 @@
-import discord, configparser
+import discord
+import configparser
 from datetime import datetime
 
-async def f_time(context, parameter):
-    text_channel = discord.utils.get(context.guild.text_channels, name = "bot")
+
+async def time(context, parameter):
+    text_channel = discord.utils.get(context.guild.text_channels, name="bot")
     parser = configparser.ConfigParser()
     parser.read("./config.env")
     times = parser.get('time', 'time_alcohol')
-    text_channel = discord.utils.get(context.guild.text_channels, name = "bot")
+    text_channel = discord.utils.get(context.guild.text_channels, name="bot")
     if parameter == "set":
         name = str(context.author)
         if name in times:

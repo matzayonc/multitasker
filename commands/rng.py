@@ -1,7 +1,8 @@
 import random
 from helpers.parameter import check_parameter, get_parameters
 
-async def f_rng(context, n1, n2):
+
+async def rng(context, n1, n2):
     parameters = get_parameters(context.message.content, 2)
     if check_parameter(n1, "int") == 1 and check_parameter(n2, "int") == 1:
         if int(parameters[0]) <= int(parameters[1]):

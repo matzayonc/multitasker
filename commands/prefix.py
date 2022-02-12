@@ -1,11 +1,13 @@
-import discord, configparser
+import discord
+import configparser
 from helpers.prefix import prefix_change
 
-async def f_change_prefix(context, bot):
-    text_channel = discord.utils.get(context.guild.text_channels, name = "bot")
+
+async def change_prefix(context, bot):
+    text_channel = discord.utils.get(context.guild.text_channels, name="bot")
     parser = configparser.ConfigParser()
     parser.read("./config.env")
-    prefix = parser.get("var","var_prefix")
+    prefix = parser.get("var", "var_prefix")
     new_prefix = prefix_change(context.message.content, prefix)
     if new_prefix == 0:
         await text_channel.send(f"You have to specify the prefix you want to be using.")
