@@ -1,5 +1,6 @@
 import discord
 import os
+from random import randrange
 
 
 def get_queue():
@@ -10,6 +11,15 @@ def get_queue():
             queue.append(f.split('.')[0])
 
     return queue
+
+
+def get_random():
+    queue = get_queue()
+
+    if len(queue) == 0:
+        raise Exception('There are no songs in queue')
+
+    return queue[randrange(len(queue))]
 
 
 async def queue(context):

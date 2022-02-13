@@ -6,4 +6,4 @@
 *.mp4
 *.webm
 *.part
-config.yaml
+./config.yaml

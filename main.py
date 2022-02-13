@@ -36,8 +36,7 @@ async def yt(context):
     try:
         props = get_parameters(context.message.content, 2)
         await cmd.yt(context, bot, props[0], props[1])
-        print('playing', props[1])
-        await cmd.play(context, bot, props[1])
+        await cmd.play(context, bot, props[1], False)
     except Exception as e:
         print(e.args[0])
         await context.author.send(e.args[0])
@@ -92,7 +91,17 @@ async def clear(context):
 async def play(context):
     try:
         parameters = get_parameters(context.message.content, 1)
-        await cmd.play(context, bot, parameters[0])
+        await cmd.play(context, bot, parameters[0], False)
+    except Exception as e:
+        print(e.args[0])
+        await context.author.send(e.args[0])
+
+
+@bot.command()
+async def loop(context):
+    try:
+        parameters = get_parameters(context.message.content, 1)
+        await cmd.play(context, bot, parameters[0], True)
     except Exception as e:
         print(e.args[0])
         await context.author.send(e.args[0])
@@ -102,7 +111,17 @@ async def play(context):
 async def random(context):
     try:
         get_parameters(context.message.content, 0)
-        await cmd.random(context, bot)
+        await cmd.play(context, bot, None, False)
+    except Exception as e:
+        print(e.args[0])
+        await context.author.send(e.args[0])
+
+
+@bot.command()
+async def shuffle(context):
+    try:
+        get_parameters(context.message.content, 0)
+        await cmd.play(context, bot, None, True)
     except Exception as e:
         print(e.args[0])
         await context.author.send(e.args[0])
