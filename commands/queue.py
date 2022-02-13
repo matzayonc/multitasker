@@ -13,7 +13,7 @@ def get_queue():
     return queue
 
 
-def get_random():
+def get_random_song():
     queue = get_queue()
 
     if len(queue) == 0:
