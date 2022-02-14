@@ -15,9 +15,6 @@ class Boombox(commands.Cog):
         self.song_after = None
 
     def stream(self, ctx, filename):
-        if ctx.voice_client and (ctx.voice_client.is_playing() or ctx.voice_client.is_paused()):
-            ctx.voice_client.stop()
-
         ctx.voice_client.play(discord.FFmpegPCMAudio(
             executable="/usr/bin/ffmpeg", source=filename), after=lambda _: self.after(ctx))
         ctx.voice_client.source = discord.PCMVolumeTransformer(
@@ -32,9 +29,14 @@ class Boombox(commands.Cog):
 
         self.stream(ctx, filename)
 
+    def is_playing(self, ctx):
+        return ctx.voice_client and (ctx.voice_client.is_playing()
+                                     or ctx.voice_client.is_paused())
+
     @commands.command()
     async def play(self, ctx, song):
         await try_here(ctx, self.bot)
+        await self.stop(ctx)
 
         filename = get_file(song)
         self.stream(ctx, filename)
@@ -43,6 +45,7 @@ class Boombox(commands.Cog):
     @commands.command()
     async def loop(self, ctx, song):
         await try_here(ctx, self.bot)
+        await self.stop(ctx)
 
         filename = get_file(song)
         self.stop_after = False
@@ -52,6 +55,7 @@ class Boombox(commands.Cog):
     @commands.command()
     async def random(self, ctx):
         await try_here(ctx, self.bot)
+        await self.stop(ctx)
 
         self.stop_after = True
         filename = get_file(get_random_song())
@@ -60,6 +64,7 @@ class Boombox(commands.Cog):
     @commands.command()
     async def shuffle(self, ctx):
         await try_here(ctx, self.bot)
+        await self.stop(ctx)
 
         self.stop_after = False
         self.song_after = None
@@ -73,13 +78,14 @@ class Boombox(commands.Cog):
 
         self.stop_after = True
         self.song_after = None
-        await self.skip(ctx)
+        if self.is_playing(ctx):
+            await self.skip(ctx)
 
     @commands.command()
     async def skip(self, ctx):
         await try_here(ctx, self.bot)
 
-        if not (ctx.voice_client and (ctx.voice_client.is_playing() or ctx.voice_client.is_paused())):
+        if not self.is_playing(ctx):
             raise Exception(f"Nothing is playing right now!")
 
         ctx.voice_client.stop()
