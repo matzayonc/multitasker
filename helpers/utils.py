@@ -1,5 +1,6 @@
 import yaml
 import youtube_dl
+import os
 
 
 def get_config():
@@ -18,3 +19,11 @@ def yt():
 
     with ydl:
         ydl.download(['https://www.youtube.com/watch?v=Q5As_wiR4DE'])
+
+
+def get_file(name):
+    filename = f"./queue/{name}.webm"
+    if not os.path.isfile(filename):
+        raise Exception("Sorry, I can't find this song")
+
+    return filename

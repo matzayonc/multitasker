@@ -1,9 +1,10 @@
 import discord
 import commands as cmd
+from helpers.connection import is_connected, is_with_user
 from helpers.parameter import get_parameters
 from discord.ext import commands
-from helpers.utils import get_config, set_config, yt
-
+from helpers.utils import get_config
+from player import Boombox
 
 intents = discord.Intents.default()
 intents.members = True
@@ -29,17 +30,6 @@ async def on_member_join(member):
 @bot.command()
 async def ping(context):
     await context.author.send("Hejcia")
-
-
-@bot.command()
-async def yt(context):
-    try:
-        props = get_parameters(context.message.content, 2)
-        await cmd.yt(context, bot, props[0], props[1])
-        await cmd.play(context, bot, props[1], False)
-    except Exception as e:
-        print(e.args[0])
-        await context.author.send(e.args[0])
 
 
 @bot.command()
@@ -82,56 +72,6 @@ async def clear(context):
     try:
         parameters = get_parameters(context.message.content, 1)
         await cmd.clear(context, parameters[0])
-    except Exception as e:
-        print(e.args[0])
-        await context.author.send(e.args[0])
-
-
-@bot.command()
-async def play(context):
-    try:
-        parameters = get_parameters(context.message.content, 1)
-        await cmd.play(context, bot, parameters[0], False)
-    except Exception as e:
-        print(e.args[0])
-        await context.author.send(e.args[0])
-
-
-@bot.command()
-async def loop(context):
-    try:
-        parameters = get_parameters(context.message.content, 1)
-        await cmd.play(context, bot, parameters[0], True)
-    except Exception as e:
-        print(e.args[0])
-        await context.author.send(e.args[0])
-
-
-@bot.command()
-async def random(context):
-    try:
-        get_parameters(context.message.content, 0)
-        await cmd.play(context, bot, None, False)
-    except Exception as e:
-        print(e.args[0])
-        await context.author.send(e.args[0])
-
-
-@bot.command()
-async def shuffle(context):
-    try:
-        get_parameters(context.message.content, 0)
-        await cmd.play(context, bot, None, True)
-    except Exception as e:
-        print(e.args[0])
-        await context.author.send(e.args[0])
-
-
-@bot.command()
-async def stop(context):
-    try:
-        get_parameters(context.message.content, 0)
-        await cmd.stop(context)
     except Exception as e:
         print(e.args[0])
         await context.author.send(e.args[0])
@@ -181,4 +121,5 @@ async def time(context):
     else:
         await context.author.send("Command 'time' takes one parameters!")
 
+bot.add_cog(Boombox(bot))
 bot.run(config['token'])
